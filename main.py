@@ -1,7 +1,6 @@
 import asyncio
 import sys
 
-import aiogram
 import logging
 import psycopg2
 from psycopg2 import Error
@@ -29,6 +28,7 @@ async def message_with_text(message: Message):
 async def main():
     try:
         # Подключение к существующей базе данных
+        # TODO: заменить юзера на ентер юзернаме и с дб тож самое
         connection = psycopg2.connect(user="postgres",
                                       # пароль, который указали при установке PostgreSQL
                                       password=input("enter the password:\n"),
