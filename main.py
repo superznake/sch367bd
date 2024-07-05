@@ -6,15 +6,24 @@ import logging
 import psycopg2
 from psycopg2 import Error
 
-from aiogram import Bot, Dispatcher
+from aiogram import Bot, Dispatcher, Router, F
+from aiogram.types import Message
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
+
+from db.db_intertactions import tablesList as show
 
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
 TOKEN = "5657714150:AAGrv8nkIAq-F_miQu3ORY6vON76yUqJYII"
 bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 cursor: psycopg2._psycopg.cursor
+router = Router()
+
+
+@router.message(F.text)
+async def message_with_text(message: Message):
+    await message.answer(show(cursor))
 
 
 async def main():
@@ -40,7 +49,6 @@ async def main():
         print("Вы подключены к - ", record, "\n")
         # show(cursor)
         dp = Dispatcher()
-        from bot.bot_func import router
         dp.include_routers(router)
         await dp.start_polling(bot)
 

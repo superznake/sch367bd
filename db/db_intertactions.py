@@ -8,5 +8,5 @@ def tablesList(cursor: psycopg2._psycopg.cursor):
     # Print the table names
     result = ""
     for table_name in table_names:
-        result += str(table_name[0])
+        result += (str(table_name[0])+"\n")
     return result
