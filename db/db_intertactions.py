@@ -6,5 +6,7 @@ def tablesList(cursor: psycopg2._psycopg.cursor):
            WHERE table_schema = 'main'""")
     table_names = cursor.fetchall()
     # Print the table names
+    result = ""
     for table_name in table_names:
-        print(table_name[0])
+        result += str(table_name[0])
+    return result
