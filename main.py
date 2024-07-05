@@ -1,6 +1,12 @@
+import sys
+
+import aiogram
+import logging
 import psycopg2
 from psycopg2 import Error
 from db.db_intertactions import tablesList as show
+
+logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
 try:
     # Подключение к существующей базе данных
