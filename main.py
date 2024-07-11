@@ -44,12 +44,12 @@ async def main():
     try:
         # Подключение к существующей базе данных
         # TODO: заменить юзера на ентер юзернаме и с дб тож самое
-        connection = psycopg2.connect(user="postgres",
+        connection = psycopg2.connect(user=input("username:"),
                                       # пароль, который указали при установке PostgreSQL
-                                      password="Faust",
+                                      password=input("password:"),
                                       host="localhost",
                                       port="5432",
-                                      database="test")
+                                      database=input("dbname:"))
 
         # Курсор для выполнения операций с базой данных
         global cursor
