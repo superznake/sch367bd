@@ -3,6 +3,7 @@ import sys
 
 import logging
 import psycopg2
+from aiogram.filters import Command
 from psycopg2 import Error
 
 from aiogram import Bot, Dispatcher, Router, F
@@ -20,11 +21,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-GCP_PROJECT_ID = os.getenv('GCP_PROJECT_ID')
+PORT = os.getenv('PORT')
+USER = os.getenv('USER')
+PASSWORD = os.getenv('PASSWORD')
+DBNAME = os.getenv('DBNAME')
+TOKEN = os.getenv('TOKEN')
 
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
-TOKEN = "5657714150:AAGrv8nkIAq-F_miQu3ORY6vON76yUqJYII"
 bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 cursor: psycopg2._psycopg.cursor
 router = Router()
@@ -42,6 +46,15 @@ async def message_with_text(message: Message):
     await message.answer(cabr(cursor, tor))
 
 
+@router.message(Command("start"))
+async def cmd_start(message: Message):
+    result = ("""название кабинета необходимо указывать в соответствии с таблицей, например химия или 11
+     \nдоступные команды:\n"""
+              + "- " + comms.seek + "[название кабинета]\nдает название картриджа в данном кабинете\n"
+              + "- " + comms.replace + "[название кабинета]\nустанавливает дату замены картриджа в данном кабинете")
+    await message.answer(result)
+
+
 @router.message(F.text)
 async def message_with_text(message: Message):
     await message.answer(show(cursor))
@@ -50,13 +63,11 @@ async def message_with_text(message: Message):
 async def main():
     try:
         # Подключение к существующей базе данных
-        # TODO: заменить юзера на ентер юзернаме и с дб тож самое
-        connection = psycopg2.connect(user=input("username:"),
-                                      # пароль, который указали при установке PostgreSQL
-                                      password=input("password:"),
+        connection = psycopg2.connect(user=USER,
+                                      password=PASSWORD,
                                       host="localhost",
-                                      port="45432",
-                                      database=input("dbname:"))
+                                      port=PORT,
+                                      database=DBNAME)
 
         # Курсор для выполнения операций с базой данных
         global cursor
