@@ -48,7 +48,7 @@ async def main():
                                       # пароль, который указали при установке PostgreSQL
                                       password=input("password:"),
                                       host="localhost",
-                                      port="5432",
+                                      port="45432",
                                       database=input("dbname:"))
 
         # Курсор для выполнения операций с базой данных

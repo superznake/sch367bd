@@ -24,7 +24,7 @@ def tablesList(cursor: psycopg2._psycopg.cursor):
 
 def cartridge_seek(cursor: psycopg2._psycopg.cursor, cab: str):
     try:
-        sql = '''SELECT model FROM main.printer_state
+        sql = '''SELECT model FROM main."printer state"
         WHERE cabinet = %s'''
         cursor.execute(sql, (cab,))
         record = cursor.fetchone()
@@ -46,7 +46,7 @@ def cartridge_seek(cursor: psycopg2._psycopg.cursor, cab: str):
 
 def cartridge_replace(cursor: psycopg2._psycopg.cursor, cab: str):
     try:
-        sql = '''UPDATE main.printer_state SET "cartridge replasment date" = %s
+        sql = '''UPDATE "main.printer state" SET "cartridge replasment date" = %s
         WHERE cabinet = %s'''
         cursor.execute(sql, (date.today(), cab,))
         cursor.connection.commit()
