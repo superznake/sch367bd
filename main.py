@@ -11,8 +11,8 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
 from db.db_intertactions import tablesList as show
-from db.db_intertactions import cabseek as cabs
-from db.db_intertactions import cabreplace as cabr
+from db.db_intertactions import cartridge_seek as cabs
+from db.db_intertactions import cartridge_replace as cabr
 from bot import comms as comms
 
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
