@@ -15,6 +15,13 @@ from db.db_intertactions import cartridge_seek as cabs
 from db.db_intertactions import cartridge_replace as cabr
 from bot import comms as comms
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+GCP_PROJECT_ID = os.getenv('GCP_PROJECT_ID')
+
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
 TOKEN = "5657714150:AAGrv8nkIAq-F_miQu3ORY6vON76yUqJYII"
