@@ -11,6 +11,9 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
 from db.db_intertactions import tablesList as show
+from db.db_intertactions import cabseek as cabs
+from db.db_intertactions import cabreplace as cabr
+from bot import comms as comms
 
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
@@ -18,6 +21,18 @@ TOKEN = "5657714150:AAGrv8nkIAq-F_miQu3ORY6vON76yUqJYII"
 bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 cursor: psycopg2._psycopg.cursor
 router = Router()
+
+
+@router.message(F.text.lower().startswith(comms.seek))
+async def message_with_text(message: Message):
+    tos = message.text.lower()[len(comms.seek):]
+    await message.answer(cabs(cursor, tos))
+
+
+@router.message(F.text.lower().startswith(comms.replace))
+async def message_with_text(message: Message):
+    tor = message.text.lower()[len(comms.replace):]
+    await message.answer(cabr(cursor, tor))
 
 
 @router.message(F.text)
@@ -31,7 +46,7 @@ async def main():
         # TODO: заменить юзера на ентер юзернаме и с дб тож самое
         connection = psycopg2.connect(user="postgres",
                                       # пароль, который указали при установке PostgreSQL
-                                      password=input("enter the password:\n"),
+                                      password="Faust",
                                       host="localhost",
                                       port="5432",
                                       database="test")
