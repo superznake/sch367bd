@@ -55,7 +55,7 @@ async def message_with_text(message: Message):
 @router.message(Command("start"))
 async def cmd_start(message: Message):
     result = ("""Доступные команды:\n"""
-            + "- " + comms.cabs + "\nсписок названик кабинетов"
+            + "- " + comms.cabs + "\nсписок названий кабинетов\n"
             + "- " + comms.seek + "[название кабинета]\nдает название картриджа в данном кабинете\n"
             + "- " + comms.replace + "[название кабинета]\nустанавливает дату замены картриджа в данном кабинете")
     await message.answer(result)
