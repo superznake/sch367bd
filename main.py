@@ -14,6 +14,7 @@ from aiogram.enums import ParseMode
 from db.db_intertactions import tablesList as show
 from db.db_intertactions import cartridge_seek as cabs
 from db.db_intertactions import cartridge_replace as cabr
+from db.db_intertactions import cab_list as cabl
 from bot import comms as comms
 
 import os
@@ -46,12 +47,17 @@ async def message_with_text(message: Message):
     await message.answer(cabr(cursor, tor))
 
 
+@router.message(F.text.lower().startswith(comms.cabs))
+async def message_with_text(message: Message):
+    await message.answer(cabl(cursor))
+
+
 @router.message(Command("start"))
 async def cmd_start(message: Message):
-    result = ("""название кабинета необходимо указывать в соответствии с таблицей, например химия или 11
-     \nдоступные команды:\n"""
-              + "- " + comms.seek + "[название кабинета]\nдает название картриджа в данном кабинете\n"
-              + "- " + comms.replace + "[название кабинета]\nустанавливает дату замены картриджа в данном кабинете")
+    result = ("""Доступные команды:\n"""
+            + "- " + comms.cabs + "\nсписок названик кабинетов"
+            + "- " + comms.seek + "[название кабинета]\nдает название картриджа в данном кабинете\n"
+            + "- " + comms.replace + "[название кабинета]\nустанавливает дату замены картриджа в данном кабинете")
     await message.answer(result)
 
 
